@@ -55,7 +55,7 @@
                 router.push({path: "/login"});
             }
             return {logout}
-        }
+        },        
     }
     </script>
 

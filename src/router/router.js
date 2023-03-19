@@ -1,9 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
-import HelloWorld from "@/views/HelloWorld";
+import store from "@/store/authstore";
+import Home from "@/views/Home";
 import LoginPage from "@/views/LoginPage";
 
 const routes = [
-    { path : "/", name : "HelloWorld", component : HelloWorld },
+    { path : "/", name : "Home", component : Home },
     { path : "/Login", name : "LoginPage", component : LoginPage },
 ]
 
@@ -12,5 +13,14 @@ const router = createRouter({
     routes : routes,
     hash : false
 });
+
+router.beforeEach(async (to, from, next)=>{
+    if(!store.state.isAuthenticated && to.path.toLowerCase() !== "/login"){
+      alert('로그인이 필요한 페이지입니다!');
+      next('/login')
+    }else{
+      next()
+    }
+  })
 
 export default router;
